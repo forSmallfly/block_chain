@@ -25,11 +25,14 @@
         "topthink/think-orm": "^2.0",
         "sc0vu/web3.php": "dev-master",
         "guzzlehttp/guzzle": "^7.5",
-        "web3p/ethereum-tx": "^0.4.3"
+        "web3p/ethereum-tx": "^0.4.3",
+        "ext-json": "*",
+        "ext-bcmath": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
-        "topthink/think-trace":"^1.0"
+        "topthink/think-trace":"^1.0",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
