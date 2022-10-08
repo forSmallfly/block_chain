@@ -22,7 +22,10 @@
     "require": {
         "php": ">=7.2.5",
         "topthink/framework": "^6.0.0",
-        "topthink/think-orm": "^2.0"
+        "topthink/think-orm": "^2.0",
+        "sc0vu/web3.php": "dev-master",
+        "guzzlehttp/guzzle": "^7.5",
+        "web3p/ethereum-tx": "^0.4.3"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
