@@ -10,7 +10,7 @@ return [
 
     // 缓存连接方式配置
     'stores'  => [
-        'file' => [
+        'file'  => [
             // 驱动方式
             'type'       => 'File',
             // 缓存保存目录
@@ -25,5 +25,21 @@ return [
             'serialize'  => [],
         ],
         // 更多的缓存连接
+        'redis' => [
+            // 驱动方式
+            'type'     => 'redis',
+            // 地址
+            'host'     => env('cache.redis_host', '127.0.0.1'),
+            // 端口
+            'port'     => env('cache.redis_port', 6379),
+            // 密码
+            'password' => env('cache.redis_password', ''),
+            // 缓存有效期 0表示永久缓存
+            'expire'   => 0,
+            // 缓存前缀
+            'prefix'   => env('cache.redis_prefix', ''),
+            // 选择数据库
+            'select'   => env('cache.redis_select', 0),
+        ],
     ],
 ];

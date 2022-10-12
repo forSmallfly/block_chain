@@ -72,6 +72,16 @@ class BlockChainService
     }
 
     /**
+     * 获取chain_id
+     *
+     * @return int
+     */
+    public function getChainId()
+    {
+        return (int)$this->chainId;
+    }
+
+    /**
      * 获取最新区块号
      *
      * @return mixed
@@ -422,5 +432,62 @@ class BlockChainService
         }
 
         return $result;
+    }
+
+    /**
+     * 交易上链
+     *
+     * @param string $method
+     * @param array  $param
+     * @param string $toAddress
+     * @param string $fromAddress
+     * @param string $fromAddressKey
+     * @param string $value
+     * @param string $nonce
+     * @param int    $chainId
+     * @return array|mixed
+     */
+    public function upLink(string $method, array $param, string $toAddress, string $fromAddress, string $fromAddressKey, string $value = '0x0', string $nonce = '0x0', int $chainId = 0)
+    {
+        try {
+            // 方法的abi码
+            $data     = $this->makeCustomByteCode($method, $param);
+            $gasPrice = $this->getGasPrice();
+
+            if (!$gasPrice || !$nonce || !$chainId) {
+                throw new \Exception("gasPrice ： {$gasPrice} , nonce ： {$nonce} , chainId ： {$chainId}  有参数为空");
+            }
+
+            // 发送数据chain_id需要转成16进制
+            $txObjChainId = BlockChainTool::numberToHex($chainId);
+
+            // 发送交易数据
+            $txObj = array(
+                'chainId'  => $txObjChainId,
+                'nonce'    => $nonce,
+                'from'     => $fromAddress,
+                'to'       => $toAddress,
+                'value'    => $value,
+                'gasPrice' => $gasPrice,
+                'data'     => $data,
+            );
+
+            // 估算燃料
+            $gas      = $this->estimateGas($txObj);
+            $gasRatio = config('block_chain.gas_ratio');
+            if (!empty($gasRatio) && is_numeric($gasRatio)) {
+                $gas = BlockChainTool::numberToHex(bcmul((string)BlockChainTool::hexToWei($gas), (string)$gasRatio, 0));
+            }
+            $txObj['gas']     = $gas;
+            $txObj['chainId'] = $chainId;
+
+            return $this->sendSignTransaction($txObj, $fromAddressKey);
+        } catch (\Throwable $throwable) {
+            return [
+                'status' => 0,
+                'msg'    => $throwable->getMessage(),
+                'error'  => $throwable
+            ];
+        }
     }
 }

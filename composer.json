@@ -27,12 +27,14 @@
         "guzzlehttp/guzzle": "^7.5",
         "web3p/ethereum-tx": "^0.4.3",
         "ext-json": "*",
-        "ext-bcmath": "*"
+        "ext-bcmath": "*",
+        "ext-redis": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
         "topthink/think-trace":"^1.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "swoole/ide-helper": "4.8.0"
     },
     "autoload": {
         "psr-4": {

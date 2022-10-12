@@ -2,6 +2,7 @@
 
 namespace block_chain;
 
+use phpseclib\Math\BigInteger;
 use Web3\Contracts\Ethabi;
 use Web3\Contracts\Types\Address;
 use Web3\Contracts\Types\Boolean;
@@ -40,10 +41,10 @@ class BlockChainTool
     /**
      * 数值转换成hex值
      *
-     * @param int $value
+     * @param int|string|BigInteger $value
      * @return string
      */
-    public static function numberToHex(int $value)
+    public static function numberToHex($value)
     {
         return $value == 0 ? '0x0' : Utils::toHex($value, true);
     }
